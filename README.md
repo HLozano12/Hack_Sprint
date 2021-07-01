@@ -1,20 +1,15 @@
-# Not Lost But Found - Matching Game
+# Holbie Memory Test - Matching Game
 
 A Lost and Found Matching game
 
-## Installation
+## To play
 
-How to Install
+- Click on a tile to reveal the hippocampi
 
+- Use your memory to locate the matching hippocampi
 
-## Rules
+- If you click incorrectly, the board will clear
 
-
-
-## Contributing
-Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change.
-
-Please make sure to update tests as appropriate.
 
 ## AUTHORS
 
