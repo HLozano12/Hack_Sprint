@@ -1,3 +1,6 @@
+#!/usr/bin/python3
+""" This is the memory test module """
+
 import pygame
 import time
 import random
@@ -28,21 +31,10 @@ clock = pygame.time.Clock()
 background = pygame.image.load("prism.jpg")
 backgroundGameLoop = pygame.image.load('holbie_background.jpg')
 # base pics
-# spring
 holbieBlue = pygame.image.load('holbie_logo_blue.png')
-# winter
 holbieYellow = pygame.image.load('holbie_logo_yellow.png')
-# Fall
 holbieGreen = pygame.image.load('holbie_logo_green.png')
-# second level additonal pics
-# summer
 holbieOrange = pygame.image.load('holbie_logo_orange.png')
-# pirates = pygame.image.load('Pirates.jpg')
-##ocean = pygame.image.load('Ocean.jpg')
-### third level additonal pics
-##ants = pygame.image.load('Ants.jpg')
-##apples = pygame.image.load('Apples.jpg')
-##bees = pygame.image.load('Bees.jpg')
 
 gameIcon = pygame.image.load('holbie_logo.png')
 pygame.display.set_icon(gameIcon)
@@ -84,11 +76,10 @@ def about():
                 pygame.quit()
                 quit()
         gameDisplay.blit(background, (00,00))
-# References to images used
+        # References to authors
         text('References:',display_width/2,display_height/1.25,15,white,'coolvetica rg.ttf')
-        text(' - Thematic Units. (n.d.). Retrieved May 31, 2017, from http://www.giftofcuriosity.com/thematic-units/ - ',display_width/2,display_height/1.2,15,white,'coolvetica rg.ttf')
-        text(' - Authored by Marwan Mohamed - ',display_width/2,display_height/1.15,15,white,'coolvetica rg.ttf')
-        text(' - Adapted by Nikki E - Hector L - Jay C - ',display_width/2,display_height/1.1,15,white,'coolvetica rg.ttf')
+        text(' - Authored by Marwan Mohamed - ',display_width/2,display_height/1.2,15,white,'coolvetica rg.ttf')
+        text(' - Adapted by Nikki E - Hector L - Jay C - ',display_width/2,display_height/1.15,15,white,'coolvetica rg.ttf')
 
         button("Back",(display_width/2)-100,(display_height/2)-50,200,100,white,red,red,white,game_intro)
 
@@ -127,17 +118,17 @@ def check_same(tile, choosen):
     else:
         return len(list(set(l))) != len(l) - 3
             
-def l_random(level = 1):
+def l_random():
     # 3 x 2
     # 4 x 2
     l=[[holbieBlue,holbieYellow,holbieGreen],[holbieBlue,holbieYellow,holbieGreen,holbieOrange]]
     l_final =[]
-    while len(l_final) != len(l[level-1])*2:
-        choice = l[level-1][random.randint(0,len(l[level-1])-1)]
+    while len(l_final) != len(l[1])*2:
+        choice = l[1][random.randint(0,len(l[1])-1)]
         if l_final.count(choice) <= 1 : l_final.append(choice)
     return l_final
 
-def game_loop(level = 2, oldchoosen = None, oldtile = None, old_x = None):
+def game_loop(oldchoosen = None, oldtile = None, old_x = None):
     # pygame.mixer.music.unpause()
     choosen = None
     time.sleep(0.1)
@@ -162,149 +153,90 @@ def game_loop(level = 2, oldchoosen = None, oldtile = None, old_x = None):
     if oldchoosen != None:
         choosen = oldchoosen[:]
     else:
-        choosen = l_random(level)
+        choosen = l_random()
     while not gameExit:
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 pygame.quit()
                 quit()
 
-        if level == 1:
-            gameDisplay.blit(backgroundGameLoop,(0,0))
-            text('Level 1',display_width/2,display_height/8,35,white,'zerovelo.ttf')
-            gameDisplay.blit(choosen[0],(100,100))
-            gameDisplay.blit(choosen[1],(300,100))
-            gameDisplay.blit(choosen[2],(500,100))
-            gameDisplay.blit(choosen[3],(100,300))
-            gameDisplay.blit(choosen[4],(300,300))
-            gameDisplay.blit(choosen[5],(500,300))
-        elif level == 2:
-            gameDisplay.blit(backgroundGameLoop,(0,0))
-            gameDisplay.blit(pygame.transform.scale(choosen[0], (150, 150)),(175,100))
-            gameDisplay.blit(pygame.transform.scale(choosen[1], (150, 150)),(325,100))
-            gameDisplay.blit(pygame.transform.scale(choosen[2], (150, 150)),(475,100))
-            gameDisplay.blit(pygame.transform.scale(choosen[3], (150, 150)),(175,250))
-            gameDisplay.blit(pygame.transform.scale(choosen[4], (150, 150)),(325,250))
-            gameDisplay.blit(pygame.transform.scale(choosen[5], (150, 150)),(475,250))
-            gameDisplay.blit(pygame.transform.scale(choosen[6], (150, 150)),(250,400))
-            gameDisplay.blit(pygame.transform.scale(choosen[7], (150, 150)),(400,400))
-        else:
-            pass
+        gameDisplay.blit(backgroundGameLoop,(0,0))
+        gameDisplay.blit(pygame.transform.scale(choosen[0], (150, 150)),(175,100))
+        gameDisplay.blit(pygame.transform.scale(choosen[1], (150, 150)),(325,100))
+        gameDisplay.blit(pygame.transform.scale(choosen[2], (150, 150)),(475,100))
+        gameDisplay.blit(pygame.transform.scale(choosen[3], (150, 150)),(175,250))
+        gameDisplay.blit(pygame.transform.scale(choosen[4], (150, 150)),(325,250))
+        gameDisplay.blit(pygame.transform.scale(choosen[5], (150, 150)),(475,250))
+        gameDisplay.blit(pygame.transform.scale(choosen[6], (150, 150)),(250,400))
+        gameDisplay.blit(pygame.transform.scale(choosen[7], (150, 150)),(400,400))
 
         if (Won == True):
             time.sleep(0.3)
-            if level == 1 and tile.count(True) == 6:
-                game_loop(2)
-            elif level == 2 and tile.count(True) == 8:
+            if tile.count(True) == 8:
                 time.sleep(5)
                 game_intro()
             
-            game_loop(level, choosen, tile, x)
+            game_loop(choosen, tile, x)
             Won = None
         if (Won == False):
             time.sleep(0.3)
-            game_loop(level, choosen)
+            game_loop(choosen)
 
         pos = pygame.mouse.get_pos()
         click = pygame.mouse.get_pressed()
 
-        if level == 1:
-            #row1
-            if 300 > pos[0] > 100 and 300 > pos[1] > 100 and click[0] == 1:
-                 tile1 = True
-            if 500 > pos[0] > 300 and 300 > pos[1] > 100 and click[0] == 1:
-                 tile2 = True
-            if 700 > pos[0] > 500 and 300 > pos[1] > 100 and click[0] == 1:
-                 tile3 = True
-            #row 2
-            if 300 > pos[0] > 100 and 500 > pos[1] > 300 and click[0] == 1:
-                 tile4 = True
-            if 500 > pos[0] > 300 and 500 > pos[1] > 300 and click[0] == 1:
-                 tile5 = True
-            if 700 > pos[0] > 500 and 500 > pos[1] > 300 and click[0] == 1:
-                 tile6 = True
-        elif level == 2:
-            if 325 > pos[0] > 175 and 250 > pos[1] > 100 and click[0] == 1:
-                 tile1 = True
-            if 475 > pos[0] > 325 and 250 > pos[1] > 100 and click[0] == 1:
-                 tile2 = True
-            if 625 > pos[0] > 475 and 250 > pos[1] > 100 and click[0] == 1:
-                 tile3 = True
-            #row 2
-            if 325 > pos[0] > 175 and 400 > pos[1] > 250 and click[0] == 1:
-                 tile4 = True
-            if 475 > pos[0] > 325 and 400 > pos[1] > 250 and click[0] == 1:
-                 tile5 = True
-            if 625 > pos[0] > 475 and 400 > pos[1] > 250 and click[0] == 1:
-                 tile6 = True
-            #row3
-            if 400 > pos[0] > 250 and 550 > pos[1] > 400 and click[0] == 1:
-                 tile7 = True
-            if 550 > pos[0] > 400 and 550 > pos[1] > 400 and click[0] == 1:
-                 tile8 = True
-        else:
-            pass
+        if 325 > pos[0] > 175 and 250 > pos[1] > 100 and click[0] == 1:
+            tile1 = True
+        if 475 > pos[0] > 325 and 250 > pos[1] > 100 and click[0] == 1:
+            tile2 = True
+        if 625 > pos[0] > 475 and 250 > pos[1] > 100 and click[0] == 1:
+            tile3 = True
+        #row 2
+        if 325 > pos[0] > 175 and 400 > pos[1] > 250 and click[0] == 1:
+            tile4 = True
+        if 475 > pos[0] > 325 and 400 > pos[1] > 250 and click[0] == 1:
+            tile5 = True
+        if 625 > pos[0] > 475 and 400 > pos[1] > 250 and click[0] == 1:
+            tile6 = True
+        #row3
+        if 400 > pos[0] > 250 and 550 > pos[1] > 400 and click[0] == 1:
+            tile7 = True
+        if 550 > pos[0] > 400 and 550 > pos[1] > 400 and click[0] == 1:
+            tile8 = True
 
         tile = [tile1, tile2, tile3, tile4, tile5, tile6, tile7, tile8]
         #print tile
         if tile.count(True) > x:
             if check_same(tile, choosen) == True:        
-                if level == 1:
-                    text('Nice !!!',display_width/2,display_height/1.15,30,green,'coolvetica rg.ttf')
-                else:
-                    text('Nice !!!',display_width/2,display_height/1.05,30,green,'coolvetica rg.ttf')
+                text('Nice !!!',display_width/2,display_height/1.05,30,green,'coolvetica rg.ttf')
                 Won = True
                 x += 2         
             else:
-                if level == 1:
-                    text('Nope !!!',display_width/2,display_height/1.15,30,red,'coolvetica rg.ttf')
-                else:
-                    text('Nope !!!',display_width/2,display_height/1.05,30,red,'coolvetica rg.ttf')
+                text('Nope !!!',display_width/2,display_height/1.05,30,red,'coolvetica rg.ttf')
                 Won = False
 
-        
-        if level == 1:
-            if not tile1: pygame.draw.rect(gameDisplay, white, (100,100,200,200))
-            if not tile2: pygame.draw.rect(gameDisplay, white, (300,100,200,200))
-            if not tile3: pygame.draw.rect(gameDisplay, white, (500,100,200,200))
-            if not tile4: pygame.draw.rect(gameDisplay, white, (100,300,200,200))
-            if not tile5: pygame.draw.rect(gameDisplay, white, (300,300,200,200))
-            if not tile6: pygame.draw.rect(gameDisplay, white, (500,300,200,200))
-        elif level == 2:
-            if not tile1: pygame.draw.rect(gameDisplay, white, (175,100,150,150))
-            if not tile2: pygame.draw.rect(gameDisplay, white, (325,100,150,150))
-            if not tile3: pygame.draw.rect(gameDisplay, white, (475,100,150,150))
-            if not tile4: pygame.draw.rect(gameDisplay, white, (175,250,150,150))
-            if not tile5: pygame.draw.rect(gameDisplay, white, (325,250,150,150))
-            if not tile6: pygame.draw.rect(gameDisplay, white, (475,250,150,150))
-            if not tile7: pygame.draw.rect(gameDisplay, white, (250,400,150,150))
-            if not tile8: pygame.draw.rect(gameDisplay, white, (400,400,150,150))
+        if not tile1: pygame.draw.rect(gameDisplay, white, (175,100,150,150))
+        if not tile2: pygame.draw.rect(gameDisplay, white, (325,100,150,150))
+        if not tile3: pygame.draw.rect(gameDisplay, white, (475,100,150,150))
+        if not tile4: pygame.draw.rect(gameDisplay, white, (175,250,150,150))
+        if not tile5: pygame.draw.rect(gameDisplay, white, (325,250,150,150))
+        if not tile6: pygame.draw.rect(gameDisplay, white, (475,250,150,150))
+        if not tile7: pygame.draw.rect(gameDisplay, white, (250,400,150,150))
+        if not tile8: pygame.draw.rect(gameDisplay, white, (400,400,150,150))
 
-
-        if level == 1:
-            # horizontal
-            pygame.draw.line(gameDisplay, black, (100,100),(700,100),5)
-            pygame.draw.line(gameDisplay, black, (100,300),(700,300),5)
-            pygame.draw.line(gameDisplay, black, (100,500),(700,500),5)
-            # vertical
-            pygame.draw.line(gameDisplay, black, (100,100),(100,500),5)
-            pygame.draw.line(gameDisplay, black, (300,100),(300,500),5)
-            pygame.draw.line(gameDisplay, black, (500,100),(500,500),5)
-            pygame.draw.line(gameDisplay, black, (700,100),(700,500),5)
-        elif level == 2:
-            # horizontal
-            pygame.draw.line(gameDisplay, black, (175,100),(625,100),5)
-            pygame.draw.line(gameDisplay, black, (175,250),(625,250),5)
-            pygame.draw.line(gameDisplay, black, (175,400),(625,400),5)
-            pygame.draw.line(gameDisplay, black, (250,550),(550,550),5)
-            # vertical
-            pygame.draw.line(gameDisplay, black, (175,100),(175,400),5)
-            pygame.draw.line(gameDisplay, black, (325,100),(325,400),5)
-            pygame.draw.line(gameDisplay, black, (475,100),(475,400),5)
-            pygame.draw.line(gameDisplay, black, (625,100),(625,400),5)
-            pygame.draw.line(gameDisplay, black, (250,400),(250,550),5)
-            pygame.draw.line(gameDisplay, black, (400,400),(400,550),5)
-            pygame.draw.line(gameDisplay, black, (550,400),(550,550),5)
+        # horizontal
+        pygame.draw.line(gameDisplay, black, (175,100),(625,100),5)
+        pygame.draw.line(gameDisplay, black, (175,250),(625,250),5)
+        pygame.draw.line(gameDisplay, black, (175,400),(625,400),5)
+        pygame.draw.line(gameDisplay, black, (250,550),(550,550),5)
+        # vertical
+        pygame.draw.line(gameDisplay, black, (175,100),(175,400),5)
+        pygame.draw.line(gameDisplay, black, (325,100),(325,400),5)
+        pygame.draw.line(gameDisplay, black, (475,100),(475,400),5)
+        pygame.draw.line(gameDisplay, black, (625,100),(625,400),5)
+        pygame.draw.line(gameDisplay, black, (250,400),(250,550),5)
+        pygame.draw.line(gameDisplay, black, (400,400),(400,550),5)
+        pygame.draw.line(gameDisplay, black, (550,400),(550,550),5)
         
         pygame.display.update()
         clock.tick(60)
